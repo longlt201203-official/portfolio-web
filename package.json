@@ -9,10 +9,16 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@heroicons/react": "^2.2.0",
+    "@mantine/carousel": "^7.16.2",
     "@mantine/core": "7.16.2",
     "@mantine/hooks": "7.16.2",
+    "@tailwindcss/vite": "^4.0.3",
+    "embla-carousel-react": "^7.1.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "react-dom": "^19.0.0",
+    "react-router-dom": "^7.1.5",
+    "tailwindcss": "^4.0.3"
   },
   "devDependencies": {
     "@types/react": "^19.0.7",
