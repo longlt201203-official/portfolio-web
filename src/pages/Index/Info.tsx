@@ -1,7 +1,7 @@
 import { List, Stack, Text, Title } from "@mantine/core";
-import GitHubIcon from "../../components/GitHubIcon";
-import LinkedInIcon from "../../components/LinkedInIcon";
-import FacebookIcon from "../../components/FacebookIcon";
+import GitHubIcon from "../../components/icons/GitHubIcon";
+import LinkedInIcon from "../../components/icons/LinkedInIcon";
+import FacebookIcon from "../../components/icons/FacebookIcon";
 
 export default function Info() {
   return (

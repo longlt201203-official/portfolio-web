@@ -17,12 +17,8 @@ import { Link } from "react-router-dom";
 
 const links = [
   {
-    label: "Projects",
+    label: "Home",
     to: "/",
-  },
-  {
-    label: "Blog",
-    to: "/blog",
   },
   {
     label: "Contact",
