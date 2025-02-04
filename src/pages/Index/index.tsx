@@ -6,7 +6,7 @@ import Main from "./Main";
 export default function IndexPage() {
   return (
     <>
-      <AppShell header={{ height: 56 }} footer={{ height: 44.8 }}>
+      <AppShell header={{ height: 60 }} footer={{ height: 48 }}>
         <Header />
         <Main />
         <Footer />

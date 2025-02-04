@@ -1,15 +1,13 @@
-import { AppShell, Container, Group, Text } from "@mantine/core";
+import { AppShell, Stack, Text } from "@mantine/core";
 
 export default function Footer() {
   return (
-    <AppShell.Footer>
-      <Container py="xs">
-        <Group justify="center">
-          <Text c="dimmed">
-            &copy; 2025 - Le Thanh Long - All Rights Reserved
-          </Text>
-        </Group>
-      </Container>
+    <AppShell.Footer bg="tawnyPort">
+      <Stack justify="center" align="center" h="100%">
+        <Text c="white" className="text-center">
+          &copy; 2025 - Le Thanh Long - All Rights Reserved
+        </Text>
+      </Stack>
     </AppShell.Footer>
   );
 }

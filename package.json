@@ -12,6 +12,7 @@
     "@heroicons/react": "^2.2.0",
     "@mantine/carousel": "^7.16.2",
     "@mantine/core": "7.16.2",
+    "@mantine/form": "^7.16.2",
     "@mantine/hooks": "7.16.2",
     "@tailwindcss/vite": "^4.0.3",
     "embla-carousel-react": "^7.1.0",

@@ -1,16 +1,18 @@
 import { AppShell } from "@mantine/core";
 import Hero from "./Hero";
 import Projects from "./Projects";
-import Timeline from "./Timeline";
-import Contact from "./Contact";
+import TimelineSection from "./TimelineSection";
+import Prefooter from "./Prefooter";
+import Blog from "./Blog";
 
 export default function Main() {
   return (
     <AppShell.Main>
       <Hero />
       <Projects />
-      <Timeline />
-      <Contact />
+      <TimelineSection />
+      <Blog />
+      <Prefooter />
     </AppShell.Main>
   );
 }
