@@ -1,8 +1,9 @@
-import { Button, Group, Stack, Title } from "@mantine/core";
+import { Button, Group, Image, Stack, Title } from "@mantine/core";
 
 export default function Hero() {
   return (
     <Stack className="h-screen" justify="center" align="center" gap="xl">
+      <Image src="/me.png" h={240} fit="contain" />
       <Title className="text-center" fz={{ base: 24, sm: 32, md: 48 }}>
         Hi, I'm Long! I'm a developer.
       </Title>
