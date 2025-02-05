@@ -1,16 +1,6 @@
-import { AppShell, Container, Stack } from "@mantine/core";
-import BlogCard from "../../components/BlogCard";
+import { AppShell } from "@mantine/core";
+import { PropsWithChildren } from "react";
 
-export default function Main() {
-  return (
-    <AppShell.Main>
-      <Container size="sm" py="xl">
-        <Stack gap="xl">
-          {Array.from({ length: 10 }).map((_, index) => (
-            <BlogCard key={index} />
-          ))}
-        </Stack>
-      </Container>
-    </AppShell.Main>
-  );
+export default function Main(props: PropsWithChildren) {
+  return <AppShell.Main>{props.children}</AppShell.Main>;
 }
