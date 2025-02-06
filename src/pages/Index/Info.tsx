@@ -1,13 +1,14 @@
-import { List, Stack, Text, Title } from "@mantine/core";
+import { List, Space, Stack, Text, Title } from "@mantine/core";
 import GitHubIcon from "../../components/icons/GitHubIcon";
 import LinkedInIcon from "../../components/icons/LinkedInIcon";
 import FacebookIcon from "../../components/icons/FacebookIcon";
 
 export default function Info() {
   return (
-    <Stack p="md" gap="xl" align="center" bg="white" className="rounded-lg">
-      <Title className="text-center">My Info</Title>
-      <List spacing="lg">
+    <Stack p="md" gap="xl">
+      <Title>Contact</Title>
+      <Space />
+      <List p="lg" className="shadow-lg shadow-primary-2 rounded-lg">
         <List.Item icon={<GitHubIcon size={32} />}>
           <Text>longlt201203</Text>
         </List.Item>

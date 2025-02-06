@@ -1,12 +1,11 @@
-import { Button, Stack, Textarea, TextInput, Title } from "@mantine/core";
+import { Button, Stack, Textarea, TextInput } from "@mantine/core";
 import { useForm } from "@mantine/form";
 
 export default function Contact() {
   const form = useForm({});
 
   return (
-    <Stack gap="xl" p="md" bg="white" className="rounded-lg">
-      <Title className="text-center">Contact</Title>
+    <Stack gap="xl" p="md">
       <form onSubmit={form.onSubmit((values) => console.log(values))}>
         <Stack>
           <TextInput
