@@ -10,7 +10,7 @@ import {
   Title,
 } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
-import BlogCard from "../../components/BlogCard";
+import BlogCard from "../../../components/BlogCard";
 
 export default function Blog() {
   return (

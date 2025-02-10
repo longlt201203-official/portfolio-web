@@ -1,4 +1,4 @@
-import { Code, Text, Title } from "@mantine/core";
+import { Code, List, Text, Title } from "@mantine/core";
 import Markdown from "react-markdown";
 import MyCodeBlock from "./MyCodeBlock";
 export interface MyMarkdownProps {
@@ -51,8 +51,11 @@ export default function MyMarkdown({ content }: MyMarkdownProps) {
             {props.children}
           </Text>
         ),
-        ul: (props) => <ul className="list-disc">{props.children}</ul>,
-        ol: (props) => <ol className="list-decimal">{props.children}</ol>,
+        ul: (props) => <List {...props} className="list-disc" />,
+        ol: (props) => (
+          <List {...props} type="ordered" className="list-decimal" />
+        ),
+        li: (props) => <List.Item {...props} />,
         code: (props) => <Code {...props} />,
         pre: (props) => <MyCodeBlock {...props} />,
       }}

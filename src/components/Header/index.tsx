@@ -14,19 +14,16 @@ import {
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
 import { Link } from "react-router-dom";
+import GitHubIcon from "../icons/GitHubIcon";
 
 const links = [
   {
-    label: "Projects",
+    label: "Home",
     to: "/",
   },
   {
     label: "Blog",
     to: "/blog",
-  },
-  {
-    label: "Contact",
-    to: "/",
   },
 ];
 
@@ -62,6 +59,14 @@ export default function Header() {
                   </Button>
                 ))}
               </Group>
+              <ActionIcon
+                variant="white"
+                component="a"
+                href="https://github.com/longlt201203/"
+                target="_blank"
+              >
+                <GitHubIcon className="h-6 w-6" fill="#b45360" />
+              </ActionIcon>
               <Menu>
                 <Menu.Target>
                   <ActionIcon variant="white">

@@ -1,6 +1,6 @@
 import { Button, Container, Group, Stack, Title } from "@mantine/core";
 import ProjectItem from "./ProjectItem";
-import GitHubIcon from "../../components/icons/GitHubIcon";
+import GitHubIcon from "../../../components/icons/GitHubIcon";
 
 export default function Projects() {
   return (
