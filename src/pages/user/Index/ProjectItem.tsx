@@ -2,17 +2,10 @@ import { Card, Spoiler, Text, Title } from "@mantine/core";
 
 export default function ProjectItem() {
   return (
-    <Card
-      shadow="sm"
-      padding="md"
-      radius="md"
-      withBorder
-      w={{ base: "100%", sm: "40%", lg: "30%" }}
-    >
+    <Card shadow="sm" padding="md" radius="md" withBorder>
       <Spoiler
         showLabel="Show Details"
         hideLabel="Hide Details"
-        h="100%"
         maxHeight={160}
       >
         <Title order={3}>Project name</Title>

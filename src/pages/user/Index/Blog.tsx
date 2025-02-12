@@ -1,20 +1,10 @@
-import {
-  Card,
-  Container,
-  Image,
-  Overlay,
-  ScrollArea,
-  Spoiler,
-  Stack,
-  Text,
-  Title,
-} from "@mantine/core";
+import { Container, Stack, Title } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import BlogCard from "../../../components/BlogCard";
 
 export default function Blog() {
   return (
-    <Container mih="100vh" size="xl">
+    <Container mih="30vh" size="xl">
       <Stack gap="xl" justify="center" align="center">
         <Title className="text-center">My Blog</Title>
         <Carousel
