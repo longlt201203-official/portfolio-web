@@ -6,6 +6,9 @@ import UserLayout from "../pages/user/layout";
 import AdminLayout from "../pages/admin/layout";
 import DashboardPage from "../pages/admin/Dashboard";
 import LoginPage from "../pages/auth/Login";
+import PostsPage from "../pages/admin/Posts";
+import WritePostPage from "../pages/admin/Posts/Write";
+import QuotesPage from "../pages/admin/Quotes";
 
 const router = createBrowserRouter([
   {
@@ -20,7 +23,26 @@ const router = createBrowserRouter([
   {
     path: "/admin",
     element: <AdminLayout />,
-    children: [{ path: "", element: <DashboardPage /> }],
+    children: [
+      { path: "", element: <DashboardPage /> },
+      {
+        path: "posts",
+        children: [
+          {
+            path: "",
+            element: <PostsPage />,
+          },
+          {
+            path: "write/:postId?",
+            element: <WritePostPage />,
+          },
+        ],
+      },
+      {
+        path: "quotes",
+        element: <QuotesPage />,
+      },
+    ],
   },
   {
     path: "/",

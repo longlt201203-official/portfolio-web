@@ -5,12 +5,13 @@ import landingCssModule from "./landing.module.css";
 
 export interface BlogCardProps {
   variant?: "blogs" | "landing";
+  withBorder?: boolean;
 }
 
-export default function BlogCard({ variant }: BlogCardProps) {
+export default function BlogCard({ variant, withBorder }: BlogCardProps) {
   return (
     <Card
-      withBorder={variant == "landing"}
+      withBorder={variant == "landing" || withBorder}
       component={Link}
       to="/blog/1"
       classNames={{

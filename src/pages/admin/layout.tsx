@@ -8,16 +8,20 @@ import {
   Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useLocation } from "react-router-dom";
 
 const navItems = [
   {
     label: "Dashboard",
-    to: "/admin",
+    to: "/admin/",
   },
   {
     label: "Posts",
     to: "/admin/posts",
+  },
+  {
+    label: "Quotes",
+    to: "/admin/quotes",
   },
   {
     label: "Contacts",
@@ -31,6 +35,8 @@ const navItems = [
 
 export default function AdminLayout() {
   const [opened, { toggle }] = useDisclosure();
+  const location = useLocation();
+  const parts = location.pathname.split("/");
 
   return (
     <AppShell
@@ -52,7 +58,7 @@ export default function AdminLayout() {
       <AppShell.Navbar>
         {navItems.map((item, index) => (
           <NavLink
-            active={index === 0}
+            active={parts[2] === item.to.split("/")[2]}
             component={Link}
             key={index}
             label={item.label}
@@ -60,8 +66,8 @@ export default function AdminLayout() {
           />
         ))}
       </AppShell.Navbar>
-      <AppShell.Main>
-        <Container fluid py="sm">
+      <AppShell.Main className="h-screen">
+        <Container fluid py="sm" className="h-full">
           <Outlet />
         </Container>
       </AppShell.Main>

@@ -10,7 +10,7 @@ export default function ArticlePage() {
 
   useEffect(() => {
     const fetchContent = async () => {
-      const response = await fetch("/test.md");
+      const response = await fetch("/template.md");
       const text = await response.text();
       setContent(text);
     };

@@ -1,4 +1,6 @@
+import "./index.css";
 import "@mantine/core/styles.css";
+import "@mantine/carousel/styles.css";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import { RouterProvider } from "react-router-dom";
