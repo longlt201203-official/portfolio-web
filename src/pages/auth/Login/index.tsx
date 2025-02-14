@@ -7,33 +7,24 @@ import {
   Group,
   PasswordInput,
   Stack,
+  Text,
   TextInput,
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { basicLogin, IBasicLoginRequest } from "../../../apis/auth";
-import { useMutation } from "@tanstack/react-query";
-import { AxiosError } from "axios";
-import { IApiError } from "../../../apis";
+import { IBasicLoginRequest } from "../../../apis/auth";
+import { useSearchParams } from "react-router-dom";
 
 export default function LoginPage() {
+  const [searchParams] = useSearchParams();
+  const error = searchParams.get("error");
+
   const form = useForm<IBasicLoginRequest>({
     mode: "uncontrolled",
     initialValues: {
       email: "",
       password: "",
       remember: false,
-    },
-  });
-
-  const basicLoginMutation = useMutation({
-    mutationKey: ["basic-login"],
-    mutationFn: basicLogin,
-    onSuccess: () => {
-      console.log("Login successful");
-    },
-    onError: (error: AxiosError<IApiError>) => {
-      console.error("Login failed", error.response?.data);
     },
   });
 
@@ -44,10 +35,12 @@ export default function LoginPage() {
           <Card w={{ xs: 240, sm: 360, md: 480 }} shadow="xs" padding="lg">
             <Stack>
               <Title order={2}>Login</Title>
+              {error && <Text c="red">{error}</Text>}
               <form
-                onSubmit={form.onSubmit((values) =>
-                  basicLoginMutation.mutate(values)
-                )}
+                onSubmit={form.onSubmit((values) => {
+                  const code = btoa(`${values.email}:${values.password}`);
+                  window.location.href = `/api/auth/login?code=${code}&type=basic`;
+                })}
               >
                 <Stack>
                   <TextInput
