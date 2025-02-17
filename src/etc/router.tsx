@@ -9,6 +9,7 @@ import LoginPage from "../pages/auth/Login";
 import PostsPage from "../pages/admin/Posts";
 import WritePostPage from "../pages/admin/Posts/Write";
 import QuotesPage from "../pages/admin/Quotes";
+import ChangePasswordPage from "../pages/auth/ChangePassword";
 
 const router = createBrowserRouter([
   {
@@ -17,6 +18,10 @@ const router = createBrowserRouter([
       {
         path: "login",
         element: <LoginPage />,
+      },
+      {
+        path: "change-password",
+        element: <ChangePasswordPage />,
       },
     ],
   },

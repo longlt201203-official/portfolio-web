@@ -7,7 +7,7 @@ export default function PostsPage() {
     <Stack>
       <Title>Posts</Title>
       <Group>
-        <Button component={Link} to="create">
+        <Button component={Link} to="write">
           New Post
         </Button>
       </Group>

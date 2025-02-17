@@ -11,10 +11,11 @@ import {
   Title,
 } from "@mantine/core";
 import Editor from "@monaco-editor/react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import MyMarkdown from "../../../../components/MyMarkdown";
 import dayjs from "dayjs";
 import { useParams } from "react-router-dom";
+import hljs from "highlight.js";
 
 const loadMdTemplate = async () => {
   const response = await fetch("/template.md");
@@ -26,6 +27,10 @@ export default function WritePostPage() {
 
   const [postTitle, setPostTitle] = useState("");
   const [mdText, setMdText] = useState("");
+
+  useEffect(() => {
+    hljs.highlightAll();
+  }, [mdText]);
 
   return (
     <Stack className="h-full" gap="xs">
