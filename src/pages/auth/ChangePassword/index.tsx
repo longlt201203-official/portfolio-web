@@ -11,16 +11,17 @@ import {
 import { useForm, zodResolver } from "@mantine/form";
 import { useMutation } from "@tanstack/react-query";
 import {
-  changePassword,
   ChangePasswordRequest,
   ChangePasswordSchema,
-} from "../../../apis/auth";
+  useAuthApis,
+} from "../../../hooks/apis/auth";
 import { useNavigate } from "react-router-dom";
 import { AxiosError } from "axios";
 import { useState } from "react";
 
 export default function ChangePasswordPage() {
   const navigate = useNavigate();
+  const { changePassword } = useAuthApis();
 
   const [errMsg, setErrMsg] = useState<string | null>(null);
   const form = useForm<ChangePasswordRequest>({

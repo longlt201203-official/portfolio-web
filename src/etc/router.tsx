@@ -10,63 +10,70 @@ import PostsPage from "../pages/admin/Posts";
 import WritePostPage from "../pages/admin/Posts/Write";
 import QuotesPage from "../pages/admin/Quotes";
 import ChangePasswordPage from "../pages/auth/ChangePassword";
+import App from "../App";
 
 const router = createBrowserRouter([
   {
-    path: "/auth",
+    path: "/",
+    element: <App />,
     children: [
       {
-        path: "login",
-        element: <LoginPage />,
-      },
-      {
-        path: "change-password",
-        element: <ChangePasswordPage />,
-      },
-    ],
-  },
-  {
-    path: "/admin",
-    element: <AdminLayout />,
-    children: [
-      { path: "", element: <DashboardPage /> },
-      {
-        path: "posts",
+        path: "auth",
         children: [
           {
-            path: "",
-            element: <PostsPage />,
+            path: "login",
+            element: <LoginPage />,
           },
           {
-            path: "write/:postId?",
-            element: <WritePostPage />,
+            path: "change-password",
+            element: <ChangePasswordPage />,
           },
         ],
       },
       {
-        path: "quotes",
-        element: <QuotesPage />,
+        path: "admin",
+        element: <AdminLayout />,
+        children: [
+          { path: "", element: <DashboardPage /> },
+          {
+            path: "posts",
+            children: [
+              {
+                path: "",
+                element: <PostsPage />,
+              },
+              {
+                path: "write/:postId?",
+                element: <WritePostPage />,
+              },
+            ],
+          },
+          {
+            path: "quotes",
+            element: <QuotesPage />,
+          },
+        ],
       },
-    ],
-  },
-  {
-    path: "/",
-    element: <UserLayout />,
-    children: [
       {
         path: "",
-        element: <IndexPage />,
-      },
-      {
-        path: "blog",
+        element: <UserLayout />,
         children: [
           {
             path: "",
-            element: <BlogPage />,
+            element: <IndexPage />,
           },
           {
-            path: ":id",
-            element: <ArticlePage />,
+            path: "blog",
+            children: [
+              {
+                path: "",
+                element: <BlogPage />,
+              },
+              {
+                path: ":id",
+                element: <ArticlePage />,
+              },
+            ],
           },
         ],
       },

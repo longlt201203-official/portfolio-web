@@ -12,8 +12,8 @@ import {
   Title,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { IBasicLoginRequest } from "../../../apis/auth";
 import { useSearchParams } from "react-router-dom";
+import { IBasicLoginRequest } from "../../../hooks/apis/auth";
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
