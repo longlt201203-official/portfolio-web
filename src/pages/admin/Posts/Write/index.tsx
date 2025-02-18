@@ -22,6 +22,7 @@ import {
 } from "../../../../hooks/apis/blog";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useParams } from "react-router-dom";
+import { toast } from "react-toastify";
 
 const loadMdTemplate = async () => {
   const response = await fetch("/template.md");
@@ -80,6 +81,9 @@ export default function WritePostPage() {
         };
         await updateBlogById(blog.id, dto);
       }
+    },
+    onSuccess: () => {
+      toast.success("Success!");
     },
   });
 
