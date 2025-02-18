@@ -2,24 +2,50 @@ import {
   AppShell,
   Button,
   Card,
-  Checkbox,
-  Divider,
   Group,
   PasswordInput,
   Stack,
   Text,
-  TextInput,
   Title,
 } from "@mantine/core";
-import { useForm } from "@mantine/form";
+import { useForm, zodResolver } from "@mantine/form";
+import { useMutation } from "@tanstack/react-query";
+import {
+  changePassword,
+  ChangePasswordRequest,
+  ChangePasswordSchema,
+} from "../../../apis/auth";
+import { useNavigate } from "react-router-dom";
+import { AxiosError } from "axios";
+import { useState } from "react";
 
 export default function ChangePasswordPage() {
-  const form = useForm({
+  const navigate = useNavigate();
+
+  const [errMsg, setErrMsg] = useState<string | null>(null);
+  const form = useForm<ChangePasswordRequest>({
     mode: "uncontrolled",
     initialValues: {
-      oldPassword: "",
+      currentPassword: "",
       newPassword: "",
       confirmPassword: "",
+    },
+    validate: zodResolver(ChangePasswordSchema),
+  });
+
+  const changePasswordMutation = useMutation({
+    mutationKey: ["changePassword"],
+    mutationFn: changePassword,
+    onSuccess: () => {
+      navigate("/auth/login");
+    },
+    onError: (error) => {
+      if (error instanceof AxiosError) {
+        setErrMsg(error.response?.data.code);
+      } else {
+        setErrMsg("An error occurred");
+        console.log(error);
+      }
     },
   });
 
@@ -30,34 +56,36 @@ export default function ChangePasswordPage() {
           <Card w={{ xs: 240, sm: 360, md: 480 }} shadow="xs" padding="lg">
             <Stack>
               <Title order={2}>Change Password</Title>
-              <form onSubmit={form.onSubmit((values) => {})}>
+              {errMsg && <Text c="red">{errMsg}</Text>}
+              <form
+                onSubmit={form.onSubmit((values) =>
+                  changePasswordMutation.mutate(values)
+                )}
+              >
                 <Stack>
-                  <TextInput
-                    label="Old Password"
-                    placeholder="Old Password"
-                    key={form.key("oldPassword")}
-                    {...form.getInputProps("oldPassword")}
+                  <PasswordInput
+                    label="Current Password"
+                    placeholder="Current Password"
+                    withAsterisk
+                    key={form.key("currentPassword")}
+                    {...form.getInputProps("currentPassword")}
                   />
                   <PasswordInput
                     label="New Password"
                     placeholder="New Password"
-                    key={form.key("password")}
-                    {...form.getInputProps("password")}
+                    withAsterisk
+                    key={form.key("newPassword")}
+                    {...form.getInputProps("newPassword")}
                   />
                   <PasswordInput
                     label="Confirm Password"
                     placeholder="Confirm Password"
-                    key={form.key("password")}
-                    {...form.getInputProps("password")}
+                    withAsterisk
+                    key={form.key("confirmPassword")}
+                    {...form.getInputProps("confirmPassword")}
                   />
                   <Group justify="space-between">
-                    <Button type="submit">Login</Button>
-                    <Checkbox
-                      label="Remember me"
-                      labelPosition="left"
-                      key={form.key("remember")}
-                      {...form.getInputProps("remember")}
-                    />
+                    <Button type="submit">Change Password</Button>
                   </Group>
                 </Stack>
               </form>
