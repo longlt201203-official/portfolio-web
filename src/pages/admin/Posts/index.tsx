@@ -1,8 +1,18 @@
 import { Button, Group, SimpleGrid, Stack, Title } from "@mantine/core";
 import { Link } from "react-router-dom";
 import PostCard from "./PostCard";
+import { useQuery } from "@tanstack/react-query";
+import { useBlogApis } from "../../../hooks/apis/blog";
 
 export default function PostsPage() {
+  const { listBlogs } = useBlogApis();
+
+  const listBlogsQuery = useQuery({
+    queryKey: ["listBlogsQuery"],
+    queryFn: listBlogs,
+    initialData: [],
+  });
+
   return (
     <Stack>
       <Title>Posts</Title>
@@ -12,8 +22,8 @@ export default function PostsPage() {
         </Button>
       </Group>
       <SimpleGrid cols={{ base: 2, lg: 3, xl: 4 }}>
-        {Array.from({ length: 10 }).map((_, index) => (
-          <PostCard key={index} />
+        {listBlogsQuery.data.map((blog, index) => (
+          <PostCard key={index} blog={blog} />
         ))}
       </SimpleGrid>
     </Stack>

@@ -15,8 +15,15 @@ import {
   Text,
   Title,
 } from "@mantine/core";
+import { BlogResponse } from "../../../hooks/apis/blog";
+import dayjs from "dayjs";
+import { Link } from "react-router-dom";
 
-export default function PostCard() {
+export interface PostCardProps {
+  blog: BlogResponse;
+}
+
+export default function PostCard({ blog }: PostCardProps) {
   return (
     <Card withBorder>
       <Group justify="space-between" gap="xs">
@@ -38,7 +45,11 @@ export default function PostCard() {
             <Menu.Item leftSection={<EyeIcon className="h-4 w-4" />}>
               Visible
             </Menu.Item>
-            <Menu.Item leftSection={<PencilSquareIcon className="h-4 w-4" />}>
+            <Menu.Item
+              leftSection={<PencilSquareIcon className="h-4 w-4" />}
+              component={Link}
+              to={`write/${blog.id}`}
+            >
               Edit
             </Menu.Item>
             <Menu.Item leftSection={<TrashIcon className="h-4 w-4" />}>
@@ -49,13 +60,13 @@ export default function PostCard() {
       </Group>
 
       <Box>
-        <Title c="tawnyPort" order={2}>
-          Post Title
+        <Title c="tawnyPort" order={4}>
+          {blog.title}
         </Title>
-        <Text c="dimmed" fz="sm">
-          Published At: 20-12-2003 00:00
+        <Text c="dimmed" fz={12}>
+          Last Update: {dayjs(blog.updatedAt).format("DD/MM/YYYY HH:mm:ss")}
         </Text>
-        <Text>This is a short description</Text>
+        <Text fz={14}>{blog.shortDescription}</Text>
       </Box>
     </Card>
   );
