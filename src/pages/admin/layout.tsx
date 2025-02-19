@@ -2,6 +2,7 @@ import {
   AppShell,
   Burger,
   Container,
+  Divider,
   Group,
   NavLink,
   Stack,
@@ -10,6 +11,7 @@ import {
 import { useDisclosure } from "@mantine/hooks";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
+import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 
 const navItems = [
   {
@@ -67,6 +69,12 @@ export default function AdminLayout() {
               to={item.to}
             />
           ))}
+          <Divider my="xs" />
+          <NavLink
+            href="/api/auth/logout"
+            label="Logout"
+            rightSection={<ArrowLongRightIcon className="h-4 w-4" />}
+          />
         </AppShell.Navbar>
         <AppShell.Main className="h-screen">
           <Container fluid py="sm" className="h-full">

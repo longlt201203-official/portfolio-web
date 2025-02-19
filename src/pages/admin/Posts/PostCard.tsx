@@ -21,17 +21,29 @@ import { Link } from "react-router-dom";
 
 export interface PostCardProps {
   blog: BlogResponse;
+  onToggleVisible?: (blogId: string) => void;
+  onDelete?: (blogId: string) => void;
 }
 
-export default function PostCard({ blog }: PostCardProps) {
+export default function PostCard({
+  blog,
+  onToggleVisible,
+  onDelete,
+}: PostCardProps) {
   return (
     <Card withBorder>
       <Group justify="space-between" gap="xs">
         <Badge
-          leftSection={<EyeSlashIcon className="h-3 w-3 " />}
-          variant="light"
+          leftSection={
+            blog.isVisible ? (
+              <EyeIcon className="h-4 w-4" />
+            ) : (
+              <EyeSlashIcon className="h-3 w-3 " />
+            )
+          }
+          variant={blog.isVisible ? "outline" : "light"}
         >
-          Hidden
+          {blog.isVisible ? "Visible" : "Hidden"}
         </Badge>
 
         <Menu>
@@ -42,8 +54,17 @@ export default function PostCard({ blog }: PostCardProps) {
           </Menu.Target>
 
           <Menu.Dropdown>
-            <Menu.Item leftSection={<EyeIcon className="h-4 w-4" />}>
-              Visible
+            <Menu.Item
+              leftSection={
+                blog.isVisible ? (
+                  <EyeSlashIcon className="h-3 w-3 " />
+                ) : (
+                  <EyeIcon className="h-4 w-4" />
+                )
+              }
+              onClick={() => onToggleVisible && onToggleVisible(blog.id)}
+            >
+              {blog.isVisible ? "Hidden" : "Visible"}
             </Menu.Item>
             <Menu.Item
               leftSection={<PencilSquareIcon className="h-4 w-4" />}
@@ -52,7 +73,10 @@ export default function PostCard({ blog }: PostCardProps) {
             >
               Edit
             </Menu.Item>
-            <Menu.Item leftSection={<TrashIcon className="h-4 w-4" />}>
+            <Menu.Item
+              leftSection={<TrashIcon className="h-4 w-4" />}
+              onClick={() => onDelete && onDelete(blog.id)}
+            >
               Delete
             </Menu.Item>
           </Menu.Dropdown>

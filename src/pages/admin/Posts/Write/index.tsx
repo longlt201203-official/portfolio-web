@@ -2,6 +2,7 @@ import {
   Button,
   Divider,
   Group,
+  Loader,
   ScrollArea,
   SimpleGrid,
   Space,
@@ -21,7 +22,7 @@ import {
   useBlogApis,
 } from "../../../../hooks/apis/blog";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toast } from "react-toastify";
 
 const loadMdTemplate = async () => {
@@ -31,6 +32,7 @@ const loadMdTemplate = async () => {
 
 export default function WritePostPage() {
   const { postId } = useParams();
+  const navigate = useNavigate();
   const { getBlogById, createBlog, updateBlogById } = useBlogApis();
 
   const getBlogByIdQuery = useQuery({
@@ -84,64 +86,75 @@ export default function WritePostPage() {
     },
     onSuccess: () => {
       toast.success("Success!");
+      navigate("/admin/posts");
     },
   });
 
+  const isLoading =
+    getBlogByIdQuery.isLoading || updateOrCreateBlogMutation.isPending;
+
   return (
-    <Stack className="h-full" gap="xs">
-      <Group gap="xs" align="end">
-        <Stack gap="xs" w={360}>
-          <TextInput
-            placeholder="Enter Post Title"
-            w="100%"
-            value={postTitle}
-            onChange={(e) => {
-              setPostTitle(e.target.value);
-            }}
-          />
-          <TextInput
-            placeholder="Enter Short Description"
-            w="100%"
-            value={shortDescription}
-            onChange={(e) => {
-              setShortDescription(e.target.value);
-            }}
-          />
-        </Stack>
-        <Button
-          onClick={() => {
-            updateOrCreateBlogMutation.mutate();
-          }}
-        >
-          Save
-        </Button>
-        <Button
-          variant="outline"
-          onClick={() =>
-            loadMdTemplate().then((v) => setMdText(v + "\n\n" + mdText))
-          }
-        >
-          Load Template
-        </Button>
-      </Group>
-      <Divider />
-      <SimpleGrid cols={2} className="h-full" spacing="xs">
-        <Editor
-          defaultLanguage="markdown"
-          value={mdText}
-          onChange={(v) => setMdText(v || "")}
-        />
-        <ScrollArea>
-          <Title c="tawnyPort">{postTitle || "Enter Post Title"}</Title>
-          <Text c="dimmed" size="sm">
-            Last Updated: {dayjs().format("DD-MM-YYYY HH:mm")}
-          </Text>
-          <Space h="xl" />
-          <Stack>
-            <MyMarkdown content={mdText} />
+    <>
+      <Stack className="h-full" gap="xs">
+        <Group gap="xs" align="end">
+          <Stack gap="xs" w={360}>
+            <TextInput
+              placeholder="Enter Post Title"
+              w="100%"
+              value={postTitle}
+              onChange={(e) => {
+                setPostTitle(e.target.value);
+              }}
+              disabled={isLoading}
+            />
+            <TextInput
+              placeholder="Enter Short Description"
+              w="100%"
+              value={shortDescription}
+              onChange={(e) => {
+                setShortDescription(e.target.value);
+              }}
+              disabled={isLoading}
+            />
           </Stack>
-        </ScrollArea>
-      </SimpleGrid>
-    </Stack>
+          <Button
+            onClick={() => {
+              updateOrCreateBlogMutation.mutate();
+            }}
+            disabled={isLoading}
+          >
+            Save
+          </Button>
+          <Button
+            variant="outline"
+            onClick={() =>
+              loadMdTemplate().then((v) => setMdText(v + "\n\n" + mdText))
+            }
+            disabled={isLoading}
+          >
+            Load Template
+          </Button>
+          <Loader size="sm" display={isLoading ? "block" : "none"} />
+        </Group>
+        <Divider />
+        <SimpleGrid cols={2} className="h-full" spacing="xs">
+          <Editor
+            defaultLanguage="markdown"
+            value={mdText}
+            onChange={(v) => setMdText(v || "")}
+          />
+          <ScrollArea>
+            <Title c="tawnyPort">{postTitle || "Enter Post Title"}</Title>
+            <Text c="dimmed" size="sm">
+              Last Updated: {dayjs().format("DD-MM-YYYY HH:mm")}
+            </Text>
+            <Space h="xl" />
+            <Stack>
+              <MyMarkdown content={mdText} />
+            </Stack>
+          </ScrollArea>
+        </SimpleGrid>
+      </Stack>
+    </>
   );
 }
