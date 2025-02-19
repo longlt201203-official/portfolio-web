@@ -42,5 +42,12 @@ export function useBlogApis() {
     return response.data;
   };
 
-  return { listBlogs, getBlogById, createBlog, updateBlogById, toggleVisible };
+  return {
+    listBlogs,
+    getBlogById,
+    createBlog,
+    updateBlogById,
+    toggleVisible,
+    deleteBlogById,
+  };
 }

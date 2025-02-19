@@ -21,8 +21,8 @@ import { Link } from "react-router-dom";
 
 export interface PostCardProps {
   blog: BlogResponse;
-  onToggleVisible?: (blogId: string) => void;
-  onDelete?: (blogId: string) => void;
+  onToggleVisible?: (blog: BlogResponse) => void;
+  onDelete?: (blog: BlogResponse) => void;
 }
 
 export default function PostCard({
@@ -62,7 +62,7 @@ export default function PostCard({
                   <EyeIcon className="h-4 w-4" />
                 )
               }
-              onClick={() => onToggleVisible && onToggleVisible(blog.id)}
+              onClick={() => onToggleVisible && onToggleVisible(blog)}
             >
               {blog.isVisible ? "Hidden" : "Visible"}
             </Menu.Item>
@@ -75,7 +75,7 @@ export default function PostCard({
             </Menu.Item>
             <Menu.Item
               leftSection={<TrashIcon className="h-4 w-4" />}
-              onClick={() => onDelete && onDelete(blog.id)}
+              onClick={() => onDelete && onDelete(blog)}
             >
               Delete
             </Menu.Item>
