@@ -38,8 +38,9 @@ export default function Header() {
         opened={opened}
         onClose={() => close()}
       >
-        {links.map((link) => (
+        {links.map((link, index) => (
           <NavLink
+            key={index}
             component={Link}
             to={link.to}
             label={link.label}
@@ -53,8 +54,13 @@ export default function Header() {
             <Text>LE THANH LONG</Text>
             <Group gap="xs">
               <Group display={{ base: "none", xs: "block" }} gap="xs">
-                {links.map((link) => (
-                  <Button variant="white" component={Link} to={link.to}>
+                {links.map((link, index) => (
+                  <Button
+                    key={index}
+                    variant="white"
+                    component={Link}
+                    to={link.to}
+                  >
                     {link.label}
                   </Button>
                 ))}

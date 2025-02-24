@@ -2,18 +2,21 @@ import { Card, Text, Title } from "@mantine/core";
 import { Link } from "react-router-dom";
 import blogsCssModule from "./blogs.module.css";
 import landingCssModule from "./landing.module.css";
+import { BlogResponse } from "../../hooks/apis/blog";
+import dayjs from "dayjs";
 
 export interface BlogCardProps {
   variant?: "blogs" | "landing";
   withBorder?: boolean;
+  blog?: BlogResponse;
 }
 
-export default function BlogCard({ variant, withBorder }: BlogCardProps) {
+export default function BlogCard({ variant, withBorder, blog }: BlogCardProps) {
   return (
     <Card
       withBorder={variant == "landing" || withBorder}
       component={Link}
-      to="/blog/1"
+      to={`/blog/${blog?.id}`}
       classNames={{
         root:
           variant == "landing" ? landingCssModule.card : blogsCssModule.card,
@@ -28,12 +31,12 @@ export default function BlogCard({ variant, withBorder }: BlogCardProps) {
               : blogsCssModule.cardTitle,
         }}
       >
-        Card Title
+        {blog?.title}
       </Title>
       <Text c="dimmed" fz="sm">
-        Published At: 20-12-2003 00:00
+        Last Updated: {dayjs(blog?.updatedAt).format("DD/MM/YYYY HH:mm:ss")}
       </Text>
-      <Text>This is a short description</Text>
+      <Text>{blog?.shortDescription}</Text>
     </Card>
   );
 }

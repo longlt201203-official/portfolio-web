@@ -55,7 +55,7 @@ export default function WritePostPage() {
       setShortDescription(blog.shortDescription);
       setMdText(blog.content!);
     }
-  }, [getBlogByIdQuery.isLoading]);
+  }, [blog]);
 
   useEffect(() => {
     hljs.highlightAll();
