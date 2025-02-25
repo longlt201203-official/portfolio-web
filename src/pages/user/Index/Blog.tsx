@@ -1,8 +1,13 @@
 import { Container, Stack, Title } from "@mantine/core";
 import { Carousel } from "@mantine/carousel";
 import BlogCard from "../../../components/BlogCard";
+import { BlogResponse } from "../../../hooks/apis/blog";
 
-export default function Blog() {
+export interface BlogSectionProps {
+  blogs?: BlogResponse[];
+}
+
+export default function Blog({ blogs }: BlogSectionProps) {
   return (
     <Container mih="30vh" size="xl">
       <Stack gap="xl" justify="center" align="center">
@@ -21,9 +26,9 @@ export default function Blog() {
             },
           }}
         >
-          {Array.from({ length: 5 }).map((_, index) => (
+          {blogs?.map((item, index) => (
             <Carousel.Slide key={index}>
-              <BlogCard key={index} variant="landing" />
+              <BlogCard key={index} variant="landing" blog={item} />
             </Carousel.Slide>
           ))}
         </Carousel>

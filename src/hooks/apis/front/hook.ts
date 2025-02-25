@@ -1,5 +1,6 @@
 import { useAxios } from "../axios";
 import { BlogResponse } from "../blog";
+import { LandingPageInfoResponse } from "./landing-page-info.response";
 import { ListBlogsQuery } from "./list-blogs.query";
 import { ViewBlogQuery } from "./view-blog.query";
 
@@ -22,5 +23,11 @@ export function useFrontApis() {
     return response.data;
   };
 
-  return { listBlogs, viewBlog };
+  const getLandingPageInfo = async () => {
+    const url = `/api/front-api/landing-page`;
+    const response = await axiosGet<LandingPageInfoResponse>(url);
+    return response.data;
+  };
+
+  return { listBlogs, viewBlog, getLandingPageInfo };
 }

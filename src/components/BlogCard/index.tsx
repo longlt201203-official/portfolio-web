@@ -1,5 +1,4 @@
 import { Card, Text, Title } from "@mantine/core";
-import { Link } from "react-router-dom";
 import blogsCssModule from "./blogs.module.css";
 import landingCssModule from "./landing.module.css";
 import { BlogResponse } from "../../hooks/apis/blog";
@@ -15,8 +14,8 @@ export default function BlogCard({ variant, withBorder, blog }: BlogCardProps) {
   return (
     <Card
       withBorder={variant == "landing" || withBorder}
-      component={Link}
-      to={`/blog/${blog?.id}`}
+      component="a"
+      href={`/blog/${blog?.id}`}
       classNames={{
         root:
           variant == "landing" ? landingCssModule.card : blogsCssModule.card,

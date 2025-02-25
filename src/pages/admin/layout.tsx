@@ -9,7 +9,7 @@ import {
   Text,
 } from "@mantine/core";
 import { useDisclosure } from "@mantine/hooks";
-import { Link, Outlet, useLocation } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import ProtectedRoute from "../../components/ProtectedRoute";
 import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 
@@ -63,10 +63,10 @@ export default function AdminLayout() {
           {navItems.map((item, index) => (
             <NavLink
               active={parts[2] === item.to.split("/")[2]}
-              component={Link}
+              component="a"
               key={index}
               label={item.label}
-              to={item.to}
+              href={item.to}
             />
           ))}
           <Divider my="xs" />

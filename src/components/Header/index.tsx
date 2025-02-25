@@ -58,8 +58,8 @@ export default function Header() {
                   <Button
                     key={index}
                     variant="white"
-                    component={Link}
-                    to={link.to}
+                    component="a"
+                    href={link.to}
                   >
                     {link.label}
                   </Button>

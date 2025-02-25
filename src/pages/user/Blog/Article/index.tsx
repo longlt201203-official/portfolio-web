@@ -3,10 +3,11 @@ import { ArrowLeftIcon } from "@heroicons/react/24/solid";
 import MyMarkdown from "../../../../components/MyMarkdown";
 import hljs from "highlight.js";
 import { useEffect } from "react";
-import { Link, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
 import { useFrontApis } from "../../../../hooks/apis/front";
 import dayjs from "dayjs";
+import PageLoading from "../../../../components/PageLoading";
 
 export default function ArticlePage() {
   const { viewBlog } = useFrontApis();
@@ -25,13 +26,15 @@ export default function ArticlePage() {
     hljs.highlightAll();
   }, [blog]);
 
-  return (
+  return viewBlogQuery.isLoading ? (
+    <PageLoading />
+  ) : (
     <Container py="xl">
       <Button
         variant="white"
         leftSection={<ArrowLeftIcon className="h-3 w-3 text-primary-6" />}
-        component={Link}
-        to="/blog"
+        component="a"
+        href="/blog"
       >
         Back
       </Button>

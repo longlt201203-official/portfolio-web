@@ -15,16 +15,15 @@ export default function BlogPage() {
     getNextPageParam: (lastPage) => lastPage.pagination?.nextPage,
   });
 
-  return (
-    <>
-      {/* <Container size="sm" py="xl">
-        <Stack gap="xl">
-          {listBlogsQuery.data?.pages.map((page) =>
-            page.data.map((item) => <BlogCard key={item.id} blog={item} />)
-          )}
-        </Stack>
-      </Container> */}
-      <PageLoading />
-    </>
+  return listBlogsQuery.isLoading ? (
+    <PageLoading />
+  ) : (
+    <Container size="sm" py="xl">
+      <Stack gap="xl">
+        {listBlogsQuery.data?.pages.map((page) =>
+          page.data.map((item) => <BlogCard key={item.id} blog={item} />)
+        )}
+      </Stack>
+    </Container>
   );
 }
