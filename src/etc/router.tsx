@@ -11,6 +11,7 @@ import WritePostPage from "../pages/admin/Posts/Write";
 import QuotesPage from "../pages/admin/Quotes";
 import ChangePasswordPage from "../pages/auth/ChangePassword";
 import App from "../App";
+import TimelinePage from "../pages/admin/Timeline";
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
                 element: <WritePostPage />,
               },
             ],
+          },
+          {
+            path: "timeline",
+            element: <TimelinePage />,
           },
           {
             path: "quotes",

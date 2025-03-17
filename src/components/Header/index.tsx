@@ -17,10 +17,10 @@ import { Link } from "react-router-dom";
 import GitHubIcon from "../icons/GitHubIcon";
 
 const links = [
-  {
-    label: "Home",
-    to: "/",
-  },
+  // {
+  //   label: "Home",
+  //   to: "/",
+  // },
   {
     label: "Blog",
     to: "/blog",
@@ -51,7 +51,9 @@ export default function Header() {
       <AppShell.Header>
         <Container py="xs" h="100%">
           <Group justify="space-between" align="center" h="100%">
-            <Text>LE THANH LONG</Text>
+            <Text component="a" href="/">
+              LE THANH LONG
+            </Text>
             <Group gap="xs">
               <Group display={{ base: "none", xs: "block" }} gap="xs">
                 {links.map((link, index) => (

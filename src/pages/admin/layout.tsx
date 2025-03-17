@@ -23,6 +23,10 @@ const navItems = [
     to: "/admin/posts",
   },
   {
+    label: "Timeline",
+    to: "/admin/timeline",
+  },
+  {
     label: "Quotes",
     to: "/admin/quotes",
   },
