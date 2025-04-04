@@ -1,37 +1,25 @@
-import { Container, List, Stack, Text, Timeline, Title } from "@mantine/core";
+import { Container, List, Stack, Timeline, Title } from "@mantine/core";
+import { TimelineResponse } from "../../../hooks/apis/timeline";
 
-const content = [
-  {
-    title: "2021",
-    description: "Gratuated from High School",
-    content: ["Do something", "Do something", "Do something"],
-  },
-  {
-    title: "04/2022",
-    description: "Back-End Developer at Papagroup Technology",
-    content: ["Do something", "Do something", "Do something"],
-  },
-  {
-    title: "12/2023",
-    description: "Back-End Developer at Nexon Dev Vina",
-    content: ["Do something", "Do something", "Do something"],
-  },
-  {
-    title: "Now",
-    description: "",
-    content: [],
-  },
-];
+interface TimelineSectionProps {
+  timelines?: TimelineResponse[];
+}
 
-export default function TimelineSection() {
+export default function TimelineSection({ timelines = [] }: TimelineSectionProps) {
+  // Sort timelines by sort order
+  const sortedTimelines = [...(timelines || [])].sort((a, b) => a.sort - b.sort);
+
   return (
-    <Container fluid mih="100vh">
+    <Container fluid>
       <Stack justify="center" align="center" gap="xl">
-        <Title className="text-center">My Timeline</Title>
-        <Timeline active={3}>
-          {content.map((item, index) => (
-            <Timeline.Item key={index} title={item.title} mih={150}>
-              <Text>{item.description}</Text>
+        <Timeline active={sortedTimelines.length > 0 ? sortedTimelines.length - 1 : 0} bulletSize={24} lineWidth={2}>
+          {sortedTimelines.map((item) => (
+            <Timeline.Item 
+              key={item.id} 
+              title={item.time} 
+              mih={150}
+            >
+              <Title order={4}>{item.title}</Title>
               <List c="dimmed" size="sm" className="list-disc">
                 {item.content.map((contentItem, contentIndex) => (
                   <List.Item key={contentIndex}>{contentItem}</List.Item>

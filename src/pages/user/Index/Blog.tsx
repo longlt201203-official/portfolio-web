@@ -1,37 +1,37 @@
-import { Container, Stack, Title } from "@mantine/core";
-import { Carousel } from "@mantine/carousel";
-import BlogCard from "../../../components/BlogCard";
+import { Button, Container, Grid, Group, Stack } from "@mantine/core";
 import { BlogResponse } from "../../../hooks/apis/blog";
+import BlogCard from "../../../components/BlogCard";
+import { Link } from "react-router-dom";
 
-export interface BlogSectionProps {
+interface BlogProps {
   blogs?: BlogResponse[];
 }
 
-export default function Blog({ blogs }: BlogSectionProps) {
+export default function Blog({ blogs = [] }: BlogProps) {
+  // Display only the latest 3 blogs
+  const latestBlogs = blogs?.slice(0, 3) || [];
+
   return (
-    <Container mih="30vh" size="xl">
-      <Stack gap="xl" justify="center" align="center">
-        <Title className="text-center">My Blog</Title>
-        <Carousel
-          w="100%"
-          slideSize={{ base: "100%", md: "60%" }}
-          slideGap="md"
-          controlsOffset="md"
-          controlSize={24}
-          loop
-          align="center"
-          styles={{
-            control: {
-              backgroundColor: "#f9f0f2",
-            },
-          }}
-        >
-          {blogs?.map((item, index) => (
-            <Carousel.Slide key={index}>
-              <BlogCard key={index} variant="landing" blog={item} />
-            </Carousel.Slide>
+    <Container size="lg">
+      <Stack gap="xl">
+        <Grid gutter="xl">
+          {latestBlogs.map((blog) => (
+            <Grid.Col key={blog.id} span={{ base: 12, md: 4 }}>
+              <BlogCard blog={blog} />
+            </Grid.Col>
           ))}
-        </Carousel>
+        </Grid>
+        
+        <Group justify="center" mt="md">
+          <Button 
+            component={Link} 
+            to="/blog"
+            size="lg"
+            variant="outline"
+          >
+            View All Articles
+          </Button>
+        </Group>
       </Stack>
     </Container>
   );

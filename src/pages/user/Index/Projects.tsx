@@ -1,17 +1,17 @@
-import { Button, Container, Stack, Title } from "@mantine/core";
+import { Button, Container, Stack } from "@mantine/core";
 import ProjectItem from "./ProjectItem";
 import GitHubIcon from "../../../components/icons/GitHubIcon";
 import { Carousel } from "@mantine/carousel";
 
 export default function Projects() {
   return (
-    <Container h="100vh" size="lg" className="overflow-auto">
+    <Container size="lg">
       <Stack align="center" justify="center" gap="xl">
-        <Title className="text-center">My Projects</Title>
         <Carousel
           w="100%"
           slideSize={{
             base: "100%",
+            sm: "80%",
             md: "60%",
           }}
           slideGap="md"
@@ -19,10 +19,14 @@ export default function Projects() {
           controlSize={24}
           loop
           align="center"
+          withIndicators
           styles={{
             control: {
               backgroundColor: "#f9f0f2",
             },
+            indicators: {
+              bottom: -40,
+            }
           }}
         >
           {Array.from({ length: 5 }).map((_, index) => (
@@ -31,7 +35,13 @@ export default function Projects() {
             </Carousel.Slide>
           ))}
         </Carousel>
-        <Button rightSection={<GitHubIcon size={24} fill="white" />}>
+        <Button 
+          rightSection={<GitHubIcon size={24} fill="white" />}
+          size="lg"
+          component="a"
+          href="https://github.com/yourusername"
+          target="_blank"
+        >
           More on GitHub
         </Button>
       </Stack>

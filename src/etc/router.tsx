@@ -12,6 +12,7 @@ import QuotesPage from "../pages/admin/Quotes";
 import ChangePasswordPage from "../pages/auth/ChangePassword";
 import App from "../App";
 import TimelinePage from "../pages/admin/Timeline";
+import InfoPage from "../pages/admin/Info";
 
 const router = createBrowserRouter([
   {
@@ -56,6 +57,10 @@ const router = createBrowserRouter([
           {
             path: "quotes",
             element: <QuotesPage />,
+          },
+          {
+            path: "info",
+            element: <InfoPage />,
           },
         ],
       },

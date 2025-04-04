@@ -18,6 +18,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
       lastName: "",
       phoneNumbers: [],
       addresses: [],
+      superEmail: ""
     },
     retry: 0,
     enabled: false,

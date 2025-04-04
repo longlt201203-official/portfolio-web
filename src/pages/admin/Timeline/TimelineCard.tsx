@@ -12,19 +12,15 @@ import {
   Stack,
   Title,
 } from "@mantine/core";
+import { TimelineResponse } from "../../../hooks/apis/timeline";
 
-const timeline = {
-  time: "01/2024",
-  title: "ABC XYZ at DEF",
-  content: [
-    "content line 1",
-    "content line 2",
-    "content line 3",
-    "content line 4",
-  ],
-};
+interface TimelineCardProps {
+  timeline: TimelineResponse;
+  onEdit: (timeline: TimelineResponse) => void;
+  onDelete: (id: string) => void;
+}
 
-export default function TimelineCard() {
+export default function TimelineCard({ timeline, onEdit, onDelete }: TimelineCardProps) {
   return (
     <Card shadow="md">
       <Stack>
@@ -38,10 +34,17 @@ export default function TimelineCard() {
             </Menu.Target>
 
             <Menu.Dropdown>
-              <Menu.Item leftSection={<PencilSquareIcon className="h-4 w-4" />}>
+              <Menu.Item 
+                leftSection={<PencilSquareIcon className="h-4 w-4" />}
+                onClick={() => onEdit(timeline)}
+              >
                 Edit
               </Menu.Item>
-              <Menu.Item leftSection={<TrashIcon className="h-4 w-4" />}>
+              <Menu.Item 
+                leftSection={<TrashIcon className="h-4 w-4" />}
+                onClick={() => onDelete(timeline.id)}
+                color="red"
+              >
                 Delete
               </Menu.Item>
             </Menu.Dropdown>
@@ -50,8 +53,8 @@ export default function TimelineCard() {
 
         <Title order={3}>{timeline.title}</Title>
         <List className="list-disc">
-          {timeline.content.map((item) => (
-            <List.Item>{item}</List.Item>
+          {timeline.content.map((item, index) => (
+            <List.Item key={index}>{item}</List.Item>
           ))}
         </List>
       </Stack>

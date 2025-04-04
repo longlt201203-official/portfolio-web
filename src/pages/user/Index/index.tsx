@@ -1,3 +1,4 @@
+import { Container, Divider, Space, Title } from "@mantine/core";
 import Hero from "./Hero";
 import Projects from "./Projects";
 import TimelineSection from "./TimelineSection";
@@ -14,16 +15,32 @@ export default function IndexPage() {
     queryKey: ["getLandingPageInfo"],
     queryFn: getLandingPageInfo,
   });
+
   const data = getLandingPageInfoQuery.data;
 
-  return getLandingPageInfoQuery.isLoading ? (
+  const isLoading = getLandingPageInfoQuery.isLoading;
+
+  return isLoading ? (
     <PageLoading />
   ) : (
     <>
       <Hero />
-      <Projects />
-      <TimelineSection />
-      <Blog blogs={data?.blogs} />
+      
+      <Container size="xl" py="xl">
+        <Divider my="xl" label={<Title order={2}>My Projects</Title>} labelPosition="center" />
+        <Projects />
+        
+        <Space h={100} />
+        
+        <Divider my="xl" label={<Title order={2}>My Journey</Title>} labelPosition="center" />
+        <TimelineSection timelines={data?.timelines} />
+        
+        <Space h={100} />
+        
+        <Divider my="xl" label={<Title order={2}>Latest Articles</Title>} labelPosition="center" />
+        <Blog blogs={data?.blogs} />
+      </Container>
+      
       <Prefooter />
     </>
   );

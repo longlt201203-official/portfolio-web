@@ -5,4 +5,5 @@ export interface AccountResponse {
   lastName: string;
   phoneNumbers: string[];
   addresses: string[];
+  superEmail: string;
 }
