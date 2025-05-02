@@ -26,7 +26,7 @@ export default function Projects() {
             },
             indicators: {
               bottom: -40,
-            }
+            },
           }}
         >
           {Array.from({ length: 5 }).map((_, index) => (
@@ -35,11 +35,11 @@ export default function Projects() {
             </Carousel.Slide>
           ))}
         </Carousel>
-        <Button 
+        <Button
           rightSection={<GitHubIcon size={24} fill="white" />}
           size="lg"
           component="a"
-          href="https://github.com/yourusername"
+          href="https://github.com/longlt201203"
           target="_blank"
         >
           More on GitHub

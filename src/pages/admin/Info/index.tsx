@@ -1,107 +1,180 @@
-import { useEffect, useState } from "react";
-import { useMutation } from "@tanstack/react-query";
 import {
-    Button,
-    Card,
-    Group,
-    Stack,
-    Text,
-    Title,
-    Divider,
+  Button,
+  Card,
+  Stack,
+  Title,
+  SimpleGrid,
+  Image,
+  FileInput,
+  TextInput,
+  Textarea,
+  Group,
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
-import { AccountResponse, useAccountApis } from "../../../hooks/apis/account";
-import { toast } from "react-toastify";
-import EditInfoForm from "./EditInfoForm";
-import useAuth from "../../../hooks/useAuth";
+import {
+  InfoResponse,
+  UpdateInfoRequest,
+  useInfoApis,
+} from "../../../hooks/apis/info";
+import { useMutation, useQuery } from "@tanstack/react-query";
+import { useEffect } from "react";
 
 export default function InfoPage() {
-    const { profile, fetchProfile } = useAuth();
-    const { updateAccount } = useAccountApis();
-    const [isEditing, setIsEditing] = useState(false);
+  const { getInfo, updateInfo } = useInfoApis();
 
-    const form = useForm<AccountResponse>({
-        initialValues: {
-            id: "",
-            emails: [""],
-            firstName: "",
-            lastName: "",
-            phoneNumbers: [""],
-            addresses: [""],
-            superEmail: "",
-        },
-    });
+  const form = useForm<UpdateInfoRequest>({
+    mode: "uncontrolled",
+    initialValues: {
+      avt: null,
+      name: "",
+      introduction: "",
+      email: "",
+      phone: "",
+      location: "",
+      githubLink: "",
+      githubUsername: "",
+      linkedinLink: "",
+      linkedinName: "",
+    },
+  });
 
-    useEffect(() => {
-        if (profile) {
-            form.setValues(profile);
-        }
-    }, [profile]);
+  const getInfoQuery = useQuery<InfoResponse>({
+    queryKey: ["getInfo"],
+    initialData: {
+      avt: "",
+      name: "",
+      introduction: "",
+      email: "",
+      phone: "",
+      location: "",
+      githubLink: "",
+      githubUsername: "",
+      linkedinName: "",
+      linkedinLink: "",
+    },
+    queryFn: getInfo,
+  });
 
-    // Use the account API to update the profile
-    const updateProfileMutation = useMutation({
-        mutationFn: (data: AccountResponse) => updateAccount(data.id, data),
-        onSuccess: () => {
-            toast.success("Profile updated successfully");
-            setIsEditing(false);
-            fetchProfile();
-        },
-        onError: (error) => {
-            toast.error("Failed to update profile");
-            console.error(error);
-        },
-    });
+  const updateInfoMutation = useMutation({
+    mutationFn: updateInfo,
+    onSuccess: () => {
+      getInfoQuery.refetch();
+      form.reset();
+    },
+  });
 
-    const handleSubmit = (values: AccountResponse) => {
-        updateProfileMutation.mutate(values);
-    };
+  useEffect(() => {
+    if (getInfoQuery.data) {
+      form.setValues({
+        avt: null,
+        name: getInfoQuery.data.name,
+        introduction: getInfoQuery.data.introduction,
+        email: getInfoQuery.data.email,
+        phone: getInfoQuery.data.phone,
+        location: getInfoQuery.data.location,
+        githubLink: getInfoQuery.data.githubLink,
+        githubUsername: getInfoQuery.data.githubUsername,
+        linkedinLink: getInfoQuery.data.linkedinLink,
+        linkedinName: getInfoQuery.data.linkedinName,
+      });
+    }
+  }, [getInfoQuery.data]);
 
-    return (
-        <Stack>
-            <Title>My Information</Title>
+  return (
+    <Stack>
+      <Title>My Information</Title>
 
-            {!isEditing ? (
-                <Card shadow="sm" padding="lg">
-                    <Stack>
-                        <Group justify="space-between">
-                            <Title order={3}>
-                                {profile?.firstName} {profile?.lastName}
-                            </Title>
-                            <Button onClick={() => setIsEditing(true)}>Edit</Button>
-                        </Group>
+      <Card shadow="sm" padding="lg">
+        <form
+          onSubmit={form.onSubmit((values) =>
+            updateInfoMutation.mutate(values)
+          )}
+        >
+          <SimpleGrid cols={2} spacing="xl">
+            <div>
+              <Stack>
+                <div className="w-[200px] h-[200px] mx-auto">
+                  <Image
+                    src={getInfoQuery.data.avt}
+                    fallbackSrc="https://placehold.co/200"
+                    radius="md"
+                  />
+                </div>
+                <FileInput
+                  label="Avatar"
+                  placeholder="Select a file"
+                  key={form.key("avt")}
+                  {...form.getInputProps("avt")}
+                />
+                <TextInput
+                  label="Name"
+                  placeholder="Input name"
+                  key={form.key("name")}
+                  {...form.getInputProps("name")}
+                />
+                <Textarea
+                  label="Introduction"
+                  placeholder="Write introduction"
+                  key={form.key("introduction")}
+                  {...form.getInputProps("introduction")}
+                />
+              </Stack>
+            </div>
 
-                        <Divider my="sm" />
-
-                        <Stack>
-                            <Title order={5}>Super Email</Title>
-                            {profile.superEmail}
-                        </Stack>
-
-                        <Stack>
-                            <Title order={5}>Email Addresses</Title>
-                            {profile?.emails.map((email, index) => (
-                                <Text key={index}>{email}</Text>
-                            ))}
-                        </Stack>
-
-                        <Stack>
-                            <Title order={5}>Phone Numbers</Title>
-                            {profile?.phoneNumbers.map((phone, index) => (
-                                <Text key={index}>{phone}</Text>
-                            ))}
-                        </Stack>
-
-                        <Stack>
-                            <Title order={5}>Addresses</Title>
-                            {profile?.addresses.map((address, index) => (
-                                <Text key={index}>{address}</Text>
-                            ))}
-                        </Stack>
-                    </Stack>
-                </Card>
-            ) : (
-                <EditInfoForm form={form} handleSubmit={handleSubmit} loading={updateProfileMutation.isPending} onClose={() => setIsEditing(false)} />
-            )}
-        </Stack>
-    );
+            <div>
+              <Stack>
+                <TextInput
+                  label="Email"
+                  placeholder="Input email"
+                  key={form.key("email")}
+                  {...form.getInputProps("email")}
+                />
+                <TextInput
+                  label="Phone Number"
+                  placeholder="Input phone number"
+                  key={form.key("phone")}
+                  {...form.getInputProps("phone")}
+                />
+                <TextInput
+                  label="Location"
+                  placeholder="Input location"
+                  key={form.key("location")}
+                  {...form.getInputProps("location")}
+                />
+                <SimpleGrid cols={2} spacing="lg">
+                  <TextInput
+                    label="GitHub Username"
+                    placeholder="Input GitHub username"
+                    key={form.key("githubUsername")}
+                    {...form.getInputProps("githubUsername")}
+                  />
+                  <TextInput
+                    label="GitHub Link"
+                    placeholder="Input GitHub link"
+                    key={form.key("github")}
+                    {...form.getInputProps("githubLink")}
+                  />
+                </SimpleGrid>
+                <SimpleGrid cols={2} spacing="lg">
+                  <TextInput
+                    label="LinkedIn Name"
+                    placeholder="Input LinkedIn Name"
+                    key={form.key("linkedinName")}
+                    {...form.getInputProps("linkedinName")}
+                  />
+                  <TextInput
+                    label="LinkedIn"
+                    placeholder="Input LinkedIn link"
+                    key={form.key("linkedinLink")}
+                    {...form.getInputProps("linkedinLink")}
+                  />
+                </SimpleGrid>
+                <Button type="submit">Save</Button>
+              </Stack>
+            </div>
+          </SimpleGrid>
+        </form>
+      </Card>
+    </Stack>
+  );
 }

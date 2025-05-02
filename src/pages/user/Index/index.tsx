@@ -24,24 +24,36 @@ export default function IndexPage() {
     <PageLoading />
   ) : (
     <>
-      <Hero />
-      
+      <Hero info={data?.info} />
+
       <Container size="xl" py="xl">
-        <Divider my="xl" label={<Title order={2}>My Projects</Title>} labelPosition="center" />
+        <Divider
+          my="xl"
+          label={<Title order={2}>My Projects</Title>}
+          labelPosition="center"
+        />
         <Projects />
-        
+
         <Space h={100} />
-        
-        <Divider my="xl" label={<Title order={2}>My Journey</Title>} labelPosition="center" />
+
+        <Divider
+          my="xl"
+          label={<Title order={2}>My Journey</Title>}
+          labelPosition="center"
+        />
         <TimelineSection timelines={data?.timelines} />
-        
+
         <Space h={100} />
-        
-        <Divider my="xl" label={<Title order={2}>Latest Articles</Title>} labelPosition="center" />
+
+        <Divider
+          my="xl"
+          label={<Title order={2}>Latest Articles</Title>}
+          labelPosition="center"
+        />
         <Blog blogs={data?.blogs} />
       </Container>
-      
-      <Prefooter />
+
+      <Prefooter info={data?.info} />
     </>
   );
 }
