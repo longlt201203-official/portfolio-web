@@ -15,7 +15,7 @@ import { ArrowLongRightIcon } from "@heroicons/react/24/solid";
 
 const navItems = [
   {
-    label: "Dashboard",
+    label: "My Info",
     to: "/admin/",
   },
   {
@@ -29,14 +29,6 @@ const navItems = [
   {
     label: "Quotes",
     to: "/admin/quotes",
-  },
-  {
-    label: "Contacts",
-    to: "/admin/contacts",
-  },
-  {
-    label: "My Info",
-    to: "/admin/info",
   },
 ];
 

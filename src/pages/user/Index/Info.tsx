@@ -1,7 +1,6 @@
 import { List, Space, Stack, Text, Title } from "@mantine/core";
 import GitHubIcon from "../../../components/icons/GitHubIcon";
 import LinkedInIcon from "../../../components/icons/LinkedInIcon";
-import FacebookIcon from "../../../components/icons/FacebookIcon";
 import { InfoResponse } from "../../../hooks/apis/info";
 import { MapPinIcon, PhoneIcon } from "@heroicons/react/24/solid";
 
