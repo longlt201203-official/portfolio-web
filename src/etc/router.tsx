@@ -12,6 +12,7 @@ import ChangePasswordPage from "../pages/auth/ChangePassword";
 import App from "../App";
 import TimelinePage from "../pages/admin/Timeline";
 import InfoPage from "../pages/admin/Info";
+import ProjectsPage from "../pages/admin/Projects";
 
 const router = createBrowserRouter([
   {
@@ -52,6 +53,10 @@ const router = createBrowserRouter([
           {
             path: "timeline",
             element: <TimelinePage />,
+          },
+          {
+            "path": "projects",
+            element: <ProjectsPage />
           },
           {
             path: "quotes",

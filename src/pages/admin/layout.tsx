@@ -27,6 +27,10 @@ const navItems = [
     to: "/admin/timeline",
   },
   {
+    label: "Projects",
+    to: "/admin/projects",
+  },
+  {
     label: "Quotes",
     to: "/admin/quotes",
   },
