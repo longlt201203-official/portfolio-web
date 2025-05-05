@@ -1,5 +1,3 @@
 import { CreateProjectRequest } from "./create-project.request";
 
-export interface UpdateeProjectRequest extends CreateProjectRequest {
-
-}
+export interface UpdateProjectRequest extends CreateProjectRequest {}
