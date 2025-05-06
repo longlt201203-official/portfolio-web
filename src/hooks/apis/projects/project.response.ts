@@ -4,4 +4,6 @@ export interface ProjectResponse {
     description: string;
     projectLink: string;
     createdAt: string;
+    order: number;
+    isHidden: boolean;
 }
