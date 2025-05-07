@@ -36,11 +36,18 @@ export function useProjectApis() {
         return response.data;
     }
 
+    const toggleVisible = async (id: string) => {
+        const url = `/api/project/${id}/toggle-visible`;
+        const response = await axiosGet(url);
+        return response.data;
+    }
+
     return {
         createProject,
         updateProject,
         deleteProject,
         listProjects,
         getProject,
+        toggleVisible
     }
 }

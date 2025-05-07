@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import { ProjectType } from './types';
 
 export default function ProjectsPage() {
-    const { listProjects, createProject, updateProject, deleteProject } = useProjectApis();
+    const { listProjects, createProject, updateProject, deleteProject, toggleVisible } = useProjectApis();
     const listProjectsQuery = useQuery({
         initialData: [],
         queryKey: ['listProjects'],
@@ -45,6 +45,16 @@ export default function ProjectsPage() {
         },
         onError: () => {
             toast.error('Project deletion failed');
+        }
+    })
+    const toggleProjectVisibleMutation = useMutation({
+        mutationFn: (project: ProjectResponse) => toggleVisible(project.id),
+        onSuccess: () => {
+            toast.success('Project visibility toggled successfully');
+            listProjectsQuery.refetch();
+        },
+        onError: () => {
+            toast.error('Project visibility toggle failed');
         }
     })
 
@@ -84,6 +94,10 @@ export default function ProjectsPage() {
         }
     };
 
+    const handleToggleVisibility = (project: ProjectResponse) => {
+        toggleProjectVisibleMutation.mutate(project);
+    };
+
     return (
         <Stack>
             <Group justify="space-between">
@@ -95,6 +109,7 @@ export default function ProjectsPage() {
                 projects={projects}
                 onEdit={handleOpenModal}
                 onDelete={handleDeleteClick}
+                onToggleVisibility={handleToggleVisibility}
             />
 
             <ProjectForm

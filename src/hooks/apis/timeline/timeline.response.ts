@@ -5,4 +5,5 @@ export interface TimelineResponse {
   content: string[];
   sort: number;
   createdAt: string;
+  isHidden: boolean;
 }

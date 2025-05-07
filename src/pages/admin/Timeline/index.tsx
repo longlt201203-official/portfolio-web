@@ -1,7 +1,7 @@
 import { Button, Group, SimpleGrid, Stack, Title, Modal, TextInput, NumberInput } from "@mantine/core";
 import TimelineCard from "./TimelineCard";
 import { useTimelineApis } from "../../../hooks/apis/timeline";
-import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { useQuery, useMutation } from "@tanstack/react-query";
 import { useState } from "react";
 import { useDisclosure } from "@mantine/hooks";
 import { TimelineResponse, CreateTimelineRequest } from "../../../hooks/apis/timeline";
@@ -9,8 +9,7 @@ import { useForm } from "@mantine/form";
 import { toast } from "react-toastify";
 
 export default function TimelinePage() {
-  const { getTimelines, createTimeline, updateTimeline, deleteTimeline } = useTimelineApis();
-  const queryClient = useQueryClient();
+  const { getTimelines, createTimeline, updateTimeline, deleteTimeline, toggleVisible } = useTimelineApis();
   const [opened, { open, close }] = useDisclosure(false);
   const [editingTimeline, setEditingTimeline] = useState<TimelineResponse | null>(null);
 
@@ -34,7 +33,7 @@ export default function TimelinePage() {
   const createTimelineMutation = useMutation({
     mutationFn: createTimeline,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["timelines"] });
+      timelinesQuery.refetch();
       toast.success("Timeline created successfully");
       close();
       form.reset();
@@ -50,7 +49,7 @@ export default function TimelinePage() {
     mutationFn: ({ id, data }: { id: string; data: CreateTimelineRequest }) => 
       updateTimeline(id, data),
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["timelines"] });
+      timelinesQuery.refetch();
       toast.success("Timeline updated successfully");
       close();
       setEditingTimeline(null);
@@ -66,11 +65,23 @@ export default function TimelinePage() {
   const deleteTimelineMutation = useMutation({
     mutationFn: deleteTimeline,
     onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["timelines"] });
+      timelinesQuery.refetch();
       toast.success("Timeline deleted successfully");
     },
     onError: (error) => {
       toast.error("Failed to delete timeline");
+      console.error(error);
+    }
+  });
+
+  const toggleVisibleMutation = useMutation({
+    mutationFn: toggleVisible,
+    onSuccess: () => {
+      timelinesQuery.refetch();
+      toast.success("Timeline visibility toggled successfully");
+    },
+    onError: (error) => {
+      toast.error("Failed to toggle timeline visibility");
       console.error(error);
     }
   });
@@ -126,6 +137,7 @@ export default function TimelinePage() {
               timeline={timeline} 
               onEdit={handleOpenModal}
               onDelete={(id) => deleteTimelineMutation.mutate(id)}
+              onToggleVisible={(id) => toggleVisibleMutation.mutate(id)}
             />
           ))}
         </SimpleGrid>

@@ -31,11 +31,18 @@ export function useTimelineApis() {
     return response.data;
   };
 
+  const toggleVisible = async (id: string) => {
+    const url = `/api/timeline/${id}/toggle-visible`;
+    const response = await axiosGet<TimelineResponse>(url);
+    return response.data;
+  }
+
   return {
     createTimeline,
     getTimelines,
     getTimeline,
     updateTimeline,
     deleteTimeline,
+    toggleVisible
   };
 }

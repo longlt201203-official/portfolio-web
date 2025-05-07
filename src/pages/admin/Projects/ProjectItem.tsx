@@ -7,9 +7,10 @@ interface ProjectItemProps {
     project: ProjectResponse;
     onEdit: (project: ProjectResponse) => void;
     onDelete: (project: ProjectResponse) => void;
+    onToggleVisibility: (project: ProjectResponse) => void;
 }
 
-export function ProjectItem({ project, onEdit, onDelete }: ProjectItemProps) {
+export function ProjectItem({ project, onEdit, onDelete, onToggleVisibility }: ProjectItemProps) {
     return (
         <Table.Tr>
             <Table.Td>{project.name}</Table.Td>
@@ -37,7 +38,7 @@ export function ProjectItem({ project, onEdit, onDelete }: ProjectItemProps) {
             </Table.Td>
             <Table.Td>
                 <Group gap="xs">
-                    <ActionIcon variant="subtle">
+                    <ActionIcon variant="subtle" onClick={() => onToggleVisibility(project)}>
                         {project.isHidden ? <EyeSlashIcon width={16} height={16} /> : <EyeIcon width={16} height={16} />}
                     </ActionIcon>
                     <ActionIcon variant="subtle" color="blue" onClick={() => onEdit(project)}>

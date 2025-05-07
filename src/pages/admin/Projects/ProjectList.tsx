@@ -6,9 +6,10 @@ interface ProjectListProps {
     projects: ProjectResponse[];
     onEdit: (project: ProjectResponse) => void;
     onDelete: (project: ProjectResponse) => void;
+    onToggleVisibility: (project: ProjectResponse) => void;
 }
 
-export function ProjectList({ projects, onEdit, onDelete }: ProjectListProps) {
+export function ProjectList({ projects, onEdit, onDelete, onToggleVisibility }: ProjectListProps) {
     return (
         <Table striped highlightOnHover>
             <Table.Thead>
@@ -29,6 +30,7 @@ export function ProjectList({ projects, onEdit, onDelete }: ProjectListProps) {
                         project={project} 
                         onEdit={onEdit} 
                         onDelete={onDelete} 
+                        onToggleVisibility={onToggleVisibility}
                     />
                 ))}
             </Table.Tbody>
