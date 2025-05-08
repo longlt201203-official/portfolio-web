@@ -14,6 +14,8 @@ import {
 import { useForm } from "@mantine/form";
 import { useSearchParams } from "react-router-dom";
 import { IBasicLoginRequest } from "../../../hooks/apis/auth";
+import { GoogleLogin } from "@react-oauth/google";
+import { toast } from "react-toastify";
 
 export default function LoginPage() {
   const [searchParams] = useSearchParams();
@@ -67,7 +69,14 @@ export default function LoginPage() {
                 </Stack>
               </form>
               <Divider label="Or" />
-              <Button variant="light">Login with Google</Button>
+              <GoogleLogin
+                onSuccess={(credentialResponse) => {
+                  window.location.href = `/api/auth/login?code=${credentialResponse.credential}&type=google`;
+                }}
+                onError={() => {
+                  toast.error("Google login failed");
+                }}
+              />
             </Stack>
           </Card>
         </Stack>

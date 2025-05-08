@@ -1,4 +1,3 @@
-import { LanguageIcon } from "@heroicons/react/24/solid";
 import {
   ActionIcon,
   AppShell,
@@ -7,7 +6,6 @@ import {
   Container,
   Drawer,
   Group,
-  Menu,
   NavLink,
   Stack,
   Text,
@@ -75,7 +73,7 @@ export default function Header() {
               >
                 <GitHubIcon className="h-6 w-6" fill="#b45360" />
               </ActionIcon>
-              <Menu>
+              {/* <Menu>
                 <Menu.Target>
                   <ActionIcon variant="white">
                     <LanguageIcon className="h-6 w-6" />
@@ -86,7 +84,7 @@ export default function Header() {
                   <Menu.Item>English</Menu.Item>
                   <Menu.Item>Tiếng Việt</Menu.Item>
                 </Menu.Dropdown>
-              </Menu>
+              </Menu> */}
               <Burger
                 display={{ xs: "none" }}
                 opened={opened}
