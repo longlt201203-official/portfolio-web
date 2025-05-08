@@ -42,4 +42,4 @@ jobs:
       - name: Run Docker Image via Docker Compose
         run: |
           cd ~/portfolio
-          docker-compose up -d ${{ env.APP_NAME }}
+          docker compose up -d ${{ env.APP_NAME }}
