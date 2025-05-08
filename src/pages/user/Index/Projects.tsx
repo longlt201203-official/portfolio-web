@@ -1,11 +1,14 @@
 import { Button, Container, SimpleGrid, Stack } from "@mantine/core"; // Changed import
 import ProjectItem from "./ProjectItem";
 import GitHubIcon from "../../../components/icons/GitHubIcon";
+import { ProjectResponse } from "../../../hooks/apis/projects";
 // Removed Carousel import
 
-export default function Projects() {
-  // Assuming you'll fetch project data later
-  const projects = Array.from({ length: 3 }); // Example: 3 projects
+export interface ProjectsProps {
+  projects?: ProjectResponse[]
+}
+
+export default function Projects({ projects }: ProjectsProps) {
 
   return (
     <Container size="lg">
@@ -17,9 +20,9 @@ export default function Projects() {
           verticalSpacing="xl"
           w="100%"
         >
-          {projects.map((_, index) => (
+          {projects?.map((item, index) => (
             // Render ProjectItem directly in the grid
-            <ProjectItem key={index} />
+            <ProjectItem key={index} project={item} />
           ))}
         </SimpleGrid>
 

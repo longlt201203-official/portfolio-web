@@ -32,7 +32,7 @@ export default function IndexPage() {
           label={<Title order={2}>My Projects</Title>}
           labelPosition="center"
         />
-        <Projects />
+        <Projects projects={data?.projects} />
 
         <Space h={100} />
 

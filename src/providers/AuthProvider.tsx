@@ -13,12 +13,7 @@ export default function AuthProvider({ children }: AuthProviderProps) {
     queryFn: getProfile,
     initialData: {
       id: "",
-      emails: [],
-      firstName: "",
-      lastName: "",
-      phoneNumbers: [],
-      addresses: [],
-      superEmail: ""
+      email: "",
     },
     retry: 0,
     enabled: false,
