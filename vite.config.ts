@@ -13,7 +13,7 @@ export default defineConfig({
         changeOrigin: true,
       },
       "^/files": {
-        target: "http://localhost:9000",
+        target: "http://localhost:9000/longlt201203-portfolio-bucket",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/files/, ""),
       }
