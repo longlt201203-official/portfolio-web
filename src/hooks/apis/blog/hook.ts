@@ -1,4 +1,5 @@
 import { useAxios } from "../axios";
+import { AiSuggestRequest } from "./ai-suggest.request";
 import { BlogResponse } from "./blog.response";
 import { CreateBlogRequest } from "./create-blog.request";
 import { UpdateBlogRequest } from "./update-blog.request";
@@ -42,6 +43,12 @@ export function useBlogApis() {
     return response.data;
   };
 
+  const aiSuggest = async (dto: AiSuggestRequest) => {
+    const url = `/api/ai/suggest`;
+    const response = await axiosPost<Partial<CreateBlogRequest>>(url, dto);
+    return response.data;
+  }
+
   return {
     listBlogs,
     getBlogById,
@@ -49,5 +56,6 @@ export function useBlogApis() {
     updateBlogById,
     toggleVisible,
     deleteBlogById,
+    aiSuggest
   };
 }

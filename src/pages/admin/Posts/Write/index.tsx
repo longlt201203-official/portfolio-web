@@ -3,6 +3,7 @@ import {
   Divider,
   Group,
   Loader,
+  MultiSelect,
   ScrollArea,
   SimpleGrid,
   Space,
@@ -15,8 +16,8 @@ import Editor from "@monaco-editor/react";
 import { useEffect, useState } from "react";
 import MyMarkdown from "../../../../components/MyMarkdown";
 import dayjs from "dayjs";
-import hljs from "highlight.js";
 import {
+  AiSuggestRequest,
   CreateBlogRequest,
   UpdateBlogRequest,
   useBlogApis,
@@ -33,7 +34,7 @@ const loadMdTemplate = async () => {
 export default function WritePostPage() {
   const { postId } = useParams();
   const navigate = useNavigate();
-  const { getBlogById, createBlog, updateBlogById } = useBlogApis();
+  const { getBlogById, createBlog, updateBlogById, aiSuggest } = useBlogApis();
 
   const getBlogByIdQuery = useQuery({
     queryKey: ["getBlogById", postId],
@@ -48,6 +49,7 @@ export default function WritePostPage() {
   const [postTitle, setPostTitle] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [mdText, setMdText] = useState("");
+  const [suggestionFields, setSuggestionFields] = useState<string[]>([])
 
   useEffect(() => {
     if (!getBlogByIdQuery.isLoading && blog) {
@@ -56,10 +58,6 @@ export default function WritePostPage() {
       setMdText(blog.content!);
     }
   }, [blog]);
-
-  useEffect(() => {
-    hljs.highlightAll();
-  }, [mdText]);
 
   const updateOrCreateBlogMutation = useMutation({
     mutationKey: ["updateOrCreateBlog"],
@@ -90,52 +88,104 @@ export default function WritePostPage() {
     },
   });
 
+  const aiSuggestMutation = useMutation({
+    mutationKey: ["aiSuggest"],
+    mutationFn: async () => {
+      const aiSuggestDto: AiSuggestRequest = {
+        params: {
+          title: postTitle || undefined,
+          content: mdText || undefined,
+          language: "en",
+          categories: [],
+          shortDescription: shortDescription || undefined
+        },
+        suggestRequestFields: suggestionFields
+      }
+
+      return await aiSuggest(aiSuggestDto);
+    },
+    onSuccess: (data) => {
+      console.log(data)
+
+      if (data.title) {
+        setPostTitle(data.title)
+      }
+
+      if (data.shortDescription) {
+        setShortDescription(data.shortDescription)
+      }
+
+      if (data.content) {
+        setMdText(data.content);
+      }
+    }
+  })
+
   const isLoading =
-    getBlogByIdQuery.isLoading || updateOrCreateBlogMutation.isPending;
+    getBlogByIdQuery.isLoading || updateOrCreateBlogMutation.isPending || aiSuggestMutation.isPending;
 
   return (
     <>
       <Stack className="h-full" gap="xs">
-        <Group gap="xs" align="end">
-          <Stack gap="xs" w={360}>
-            <TextInput
-              placeholder="Enter Post Title"
-              w="100%"
-              value={postTitle}
-              onChange={(e) => {
-                setPostTitle(e.target.value);
+        <Stack>
+          <Group gap="xs">
+            <MultiSelect
+              placeholder="Select fields to suggest"
+              data={[
+                { label: "Title", value: "title" }, 
+                { label: "Short Description", value: "shortDescription" }, 
+                { label: "Content", value: "content" }
+              ]}
+              value={suggestionFields}
+              onChange={(value) => setSuggestionFields(value)}
+              disabled={isLoading} />
+
+
+            <Button onClick={() => aiSuggestMutation.mutate()} disabled={isLoading}>Suggest</Button>
+          </Group>
+
+          <Group gap="xs" align="end">
+            <Stack gap="xs" w={360}>
+              <TextInput
+                placeholder="Enter Post Title"
+                w="100%"
+                value={postTitle}
+                onChange={(e) => {
+                  setPostTitle(e.target.value);
+                }}
+                disabled={isLoading}
+              />
+              <TextInput
+                placeholder="Enter Short Description"
+                w="100%"
+                value={shortDescription}
+                onChange={(e) => {
+                  setShortDescription(e.target.value);
+                }}
+                disabled={isLoading}
+              />
+            </Stack>
+            <Button
+              onClick={() => {
+                updateOrCreateBlogMutation.mutate();
               }}
               disabled={isLoading}
-            />
-            <TextInput
-              placeholder="Enter Short Description"
-              w="100%"
-              value={shortDescription}
-              onChange={(e) => {
-                setShortDescription(e.target.value);
-              }}
+            >
+              Save
+            </Button>
+            <Button
+              variant="outline"
+              onClick={() =>
+                loadMdTemplate().then((v) => setMdText(v + "\n\n" + mdText))
+              }
               disabled={isLoading}
-            />
-          </Stack>
-          <Button
-            onClick={() => {
-              updateOrCreateBlogMutation.mutate();
-            }}
-            disabled={isLoading}
-          >
-            Save
-          </Button>
-          <Button
-            variant="outline"
-            onClick={() =>
-              loadMdTemplate().then((v) => setMdText(v + "\n\n" + mdText))
-            }
-            disabled={isLoading}
-          >
-            Load Template
-          </Button>
-          <Loader size="sm" display={isLoading ? "block" : "none"} />
-        </Group>
+            >
+              Load Template
+            </Button>
+
+          </Group>
+        </Stack>
+        <Loader size="sm" display={isLoading ? "block" : "none"} />
         <Divider />
         <SimpleGrid cols={2} className="h-full" spacing="xs">
           <Editor
