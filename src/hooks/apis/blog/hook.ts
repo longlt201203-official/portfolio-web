@@ -43,8 +43,8 @@ export function useBlogApis() {
     return response.data;
   };
 
-  const aiSuggest = async (dto: AiSuggestRequest) => {
-    const url = `/api/ai/suggest`;
+  const aiSuggest = async (model: string, dto: AiSuggestRequest) => {
+    const url = `/api/ai/${model}/suggest`;
     const response = await axiosPost<Partial<CreateBlogRequest>>(url, dto);
     return response.data;
   }

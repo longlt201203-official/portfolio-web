@@ -5,6 +5,7 @@ import {
   Loader,
   MultiSelect,
   ScrollArea,
+  Select,
   SimpleGrid,
   Space,
   Stack,
@@ -46,6 +47,7 @@ export default function WritePostPage() {
   });
   const blog = getBlogByIdQuery.data;
 
+  const [model, setModel] = useState("");
   const [postTitle, setPostTitle] = useState("");
   const [shortDescription, setShortDescription] = useState("");
   const [mdText, setMdText] = useState("");
@@ -102,7 +104,7 @@ export default function WritePostPage() {
         suggestRequestFields: suggestionFields
       }
 
-      return await aiSuggest(aiSuggestDto);
+      return await aiSuggest(model, aiSuggestDto);
     },
     onSuccess: (data) => {
       console.log(data)
@@ -129,6 +131,8 @@ export default function WritePostPage() {
       <Stack className="h-full" gap="xs">
         <Stack>
           <Group gap="xs">
+            <Select placeholder="Select model" data={["gpt-4"]} value={model} onChange={(v) => setModel(v || "gpt-4")} />
+            
             <MultiSelect
               placeholder="Select fields to suggest"
               data={[
@@ -139,7 +143,6 @@ export default function WritePostPage() {
               value={suggestionFields}
               onChange={(value) => setSuggestionFields(value)}
               disabled={isLoading} />
-
 
             <Button onClick={() => aiSuggestMutation.mutate()} disabled={isLoading}>Suggest</Button>
           </Group>
