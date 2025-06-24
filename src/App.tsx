@@ -1,6 +1,7 @@
 import "./index.css";
 import "@mantine/core/styles.css";
 import "@mantine/carousel/styles.css";
+import "highlight.js/styles/github.css";
 import { MantineProvider } from "@mantine/core";
 import { theme } from "./theme";
 import { Outlet } from "react-router-dom";

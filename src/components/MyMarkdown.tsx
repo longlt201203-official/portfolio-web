@@ -1,16 +1,11 @@
 import { Code, List, Text, Title } from "@mantine/core";
 import Markdown from "react-markdown";
 import MyCodeBlock from "./MyCodeBlock";
-import { useEffect } from "react";
 export interface MyMarkdownProps {
   content?: string;
 }
 
 export default function MyMarkdown({ content }: MyMarkdownProps) {
-  useEffect(() => {
-    import("highlight.js/styles/github.css");
-  }, []);
-
   return (
     <Markdown
       components={{
