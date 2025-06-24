@@ -131,7 +131,7 @@ export default function WritePostPage() {
       <Stack className="h-full" gap="xs">
         <Stack>
           <Group gap="xs">
-            <Select placeholder="Select model" data={["gpt-4"]} value={model} onChange={(v) => setModel(v || "gpt-4")} />
+            <Select placeholder="Select model" data={["gpt-4", "gemini-2.0-flash"]} value={model} onChange={(v) => setModel(v || "gpt-4")} disabled={isLoading} />
             
             <MultiSelect
               placeholder="Select fields to suggest"

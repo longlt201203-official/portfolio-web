@@ -19,7 +19,7 @@ export default function MyCodeBlock(props: MyCodeBlockProps) {
   return (
     <Stack gap={0}>
       {props.topText && <Text size="xs">{props.topText}</Text>}
-      <Code ref={codeRef} {...props} block />
+      <Code className="bg-gray-200" ref={codeRef} block {...props} />
       {props.bottomText && <Text size="xs">{props.bottomText}</Text>}
     </Stack>
   );
